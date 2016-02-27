@@ -1,17 +1,28 @@
 package main.views;
 
+import main.db.DBConnection;
+import main.entities.Client;
+import main.entities.Factory;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.Statement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  * Created by julian.egea on 26/2/16.
  * Esta MainView construye las tablas y será la primera vista de la App
  */
 public class MainView extends JFrame{
+    //variable de conexion y arraylist con el almacenaje de datos de la BBDD
+    DBConnection con = new DBConnection();
+    private ArrayList<Client> clients;
+    private ArrayList<Factory> factories;
     //variables del Frame
     private static JMenuBar menuBar;
     private static JMenuItem addFactoryItem;
@@ -92,12 +103,14 @@ public class MainView extends JFrame{
                     MainView.this.dispose();
                     new MainView();
                     setFactoryTable();
+                    addInfoInFactoryTable();
                     clientComboBox.setSelectedItem(clientSelected);
                 }
                 else if(clientSelected == "Cliente"){
                     MainView.this.dispose();
                     new MainView();
                     setClientTable();
+                    addInfoInClientTable();
                     clientComboBox.setSelectedItem(clientSelected);
                 }
             }
@@ -181,6 +194,38 @@ public class MainView extends JFrame{
         clientTable.setColumnSelectionAllowed(false);
 
         scrollPane.setViewportView(clientTable);
+    }
+    public void addInfoInClientTable(){
+        //obtenemos los clientes para meterlos en la lista
+        clients = con.getClients();
+        //este for se encarga de añadir una fila por cada cliente en el array y mete las columnas en la tabla.
+        for (int i=0; i<clients.size(); i++) {
+            //creamos un array de Object que tiene como tamaño tantas columnas tenga un cliente en la BBDD
+            Object[] fila = new Object[6];
+            fila[0] = clients.get(i).getName();
+            fila[1] = clients.get(i).getSurname();
+            fila[2] = clients.get(i).getDni();
+            fila[3] = clients.get(i).getPoblation();
+            fila[4] = clients.get(i).getPostal_code();
+            fila[5] = clients.get(i).getPhone();
+            clientModel.addRow(fila);
+        }
+    }
+    public void addInfoInFactoryTable(){
+        //obtenemos los clientes para meterlos en la lista
+        factories = con.getFactories();
+        //este for se encarga de añadir una fila por cada cliente en el array y mete las columnas en la tabla.
+        for (int i=0; i<factories.size(); i++) {
+            //creamos un array de Object que tiene como tamaño tantas columnas tenga un cliente en la BBDD
+            Object[] fila = new Object[6];
+            fila[0] = factories.get(i).getOwner();
+            fila[1] = factories.get(i).getDni();
+            fila[2] = factories.get(i).getPoblation();
+            fila[3] = factories.get(i).getPostal_code();
+            fila[4] = factories.get(i).getPhone();
+            fila[5] = factories.get(i).getComission();
+            factoryModel.addRow(fila);
+        }
     }
     //construyes la view mediante el constructor de la clase
     public MainView(){

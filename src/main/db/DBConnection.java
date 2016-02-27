@@ -15,7 +15,7 @@ public class DBConnection {
         try{
             DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
 
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/StucomThreads", "root", null);
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/Practica_Swing", "root", "1234");
             s = connection.createStatement();
 
         }catch(Exception e){
@@ -32,7 +32,7 @@ public class DBConnection {
             while(rs.next()){
                 int id = (Integer) rs.getObject("id");
                 String name = (String) rs.getObject("nombre");
-                String surname = (String) rs.getObject("apellido");
+                String surname = (String) rs.getObject("apellidos");
                 String dni = (String) rs.getObject("dni");
                 String poblation = (String) rs.getObject("poblacion");
                 int postal_code = (Integer) rs.getObject("codigo_postal");
@@ -47,17 +47,17 @@ public class DBConnection {
         return clientes;
     }
     //para añadir un cliente nuevo
-    public void addClient(int id, String name, String surname, String dni, String poblation, int postal_code, int phone){
+    public void addClient(String name, String surname, String dni, String poblation, int postal_code, int phone){
         try{
-            String query = "INSERT INTO ACTRIZ VALUES (" + id + ", '" + name + "', '" + surname + "', '" + dni + "', '" + poblation + "', " + postal_code+ ", "+phone+")";
+            String query = "INSERT INTO Client (nombre, apellidos, dni, poblacion, codigo_postal, telefono)VALUES ('" + name + "', '" + surname + "', '" + dni + "', '" + poblation + "', " + postal_code+ ", "+phone+");";
             System.out.println("Query INSERT: "+query);
             int rs = s.executeUpdate(query);
         }catch(Exception e){}
     }
     //para añadir una fabrica
-    public void addFactory(int id, String owner, String dni, String poblation, int postal_code, int phone, float comission){
+    public void addFactory(String owner, String dni, String poblation, int postal_code, int phone, float comission){
         try{
-            String query = "INSERT INTO ACTRIZ VALUES (" + id + ", '" + owner + "', '" + dni + "', '" + poblation + "', " + postal_code+ ", "+phone+", "+comission+")";
+            String query = "INSERT INTO FACTORY(propietario, dni, poblacion, codigo_postal, telefono, comision) VALUES ('" + owner + "', '" + dni + "', '" + poblation + "', " + postal_code+ ", "+phone+", "+comission+")";
             System.out.println("Query INSERT: "+query);
             int rs = s.executeUpdate(query);
         }catch(Exception e){}
@@ -67,7 +67,7 @@ public class DBConnection {
         Factory newFactory;
         ArrayList<Factory> fabricas = new ArrayList<Factory>();
         try{
-            ResultSet rs = s.executeQuery("select * from Fabrica");
+            ResultSet rs = s.executeQuery("select * from Factory");
 
             while(rs.next()){
                 int id = (Integer) rs.getObject("id");
@@ -76,7 +76,7 @@ public class DBConnection {
                 String poblation = (String) rs.getObject("poblacion");
                 int postal_code = (Integer) rs.getObject("codigo_postal");
                 int phone = (Integer) rs.getObject("telefono");
-                float comission = (Float) rs.getObject("comision");
+                float comission = (float) rs.getObject("comision");
 
                 newFactory = new Factory(id, owner, dni, poblation, postal_code, phone, comission);
                 fabricas.add(newFactory);

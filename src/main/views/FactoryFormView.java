@@ -1,5 +1,7 @@
 package main.views;
 
+import main.db.DBConnection;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,6 +12,8 @@ import java.awt.event.ActionListener;
  * Esta View despliega un formulario de registro para fábricas
  */
 public class FactoryFormView extends JFrame{
+    //conexion
+    DBConnection con = new DBConnection();
     //variables de la ventana
     private static JPanel segundaVentana;
     private static JMenuBar menuBar;
@@ -23,19 +27,19 @@ public class FactoryFormView extends JFrame{
 
     //variables formulario
     //form labels
-    private static Component ownerLabel;
-    private static Component dniLabel;
-    private static Component poblationLabel;
-    private static Component postalCodeLabel;
-    private static Component phoneLabel;
-    private static Component comissionLabel;
+    private static JLabel ownerLabel;
+    private static JLabel dniLabel;
+    private static JLabel poblationLabel;
+    private static JLabel postalCodeLabel;
+    private static JLabel phoneLabel;
+    private static JLabel comissionLabel;
     //form textfields
-    private static Component ownerTextField;
-    private static Component dniTextField;
-    private static Component poblationTextField;
-    private static Component postalCodeTextField;
-    private static Component phoneTextField;
-    private static Component comissionTextField;
+    private static JTextField ownerTextField;
+    private static JTextField dniTextField;
+    private static JTextField poblationTextField;
+    private static JTextField postalCodeTextField;
+    private static JTextField phoneTextField;
+    private static JTextField comissionTextField;
 
     public void setMenu(){
         menuBar = new JMenuBar();
@@ -144,6 +148,12 @@ public class FactoryFormView extends JFrame{
         layout.putConstraint(SpringLayout.NORTH, submit, 310, SpringLayout.NORTH, contentPane);
 
         contentPane.add(submit);
+
+        submit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                con.addFactory(ownerTextField.getText(), dniTextField.getText(), poblationTextField.getText(),  Integer.parseInt(postalCodeTextField.getText()), Integer.parseInt(phoneTextField.getText()), Float.parseFloat(comissionTextField.getText()));
+            }
+        });
     }
     //constructor de la view
     public FactoryFormView(){

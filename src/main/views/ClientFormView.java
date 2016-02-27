@@ -1,14 +1,20 @@
 package main.views;
 
+import main.db.DBConnection;
+import main.entities.Client;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * Created by julian.egea on 26/2/16.
  */
 public class ClientFormView extends JFrame{
+    //conexion
+    DBConnection con = new DBConnection();
     //frame variables
     private static JPanel addClient;
     private static JMenuBar menuBar;
@@ -22,19 +28,19 @@ public class ClientFormView extends JFrame{
 
     //variables formulario
     //form labels
-    private static Component nameLabel;
-    private static Component surnameLabel;
-    private static Component dniLabel;
-    private static Component poblationLabel;
-    private static Component postalCodeLabel;
-    private static Component phoneLabel;
+    private static JLabel nameLabel;
+    private static JLabel surnameLabel;
+    private static JLabel dniLabel;
+    private static JLabel poblationLabel;
+    private static JLabel postalCodeLabel;
+    private static JLabel phoneLabel;
     //form textfields
-    private static Component nameTextField;
-    private static Component surnameTextField;
-    private static Component dniTextField;
-    private static Component poblationTextField;
-    private static Component postalCodeTextField;
-    private static Component phoneTextField;
+    private static JTextField nameTextField;
+    private static JTextField surnameTextField;
+    private static JTextField dniTextField;
+    private static JTextField poblationTextField;
+    private static JTextField postalCodeTextField;
+    private static JTextField phoneTextField;
 
     public void setMenu() {
         menuBar = new JMenuBar();
@@ -143,7 +149,14 @@ public class ClientFormView extends JFrame{
         contentPane.add(phoneTextField);
         contentPane.add(formLabel);
         contentPane.add(submit);
+
+        submit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                con.addClient(nameTextField.getText(), surnameTextField.getText(), dniTextField.getText(), poblationTextField.getText(),  Integer.parseInt(postalCodeTextField.getText()), Integer.parseInt(phoneTextField.getText()));
+            }
+        });
     }
+
     //constructor de la view
     public ClientFormView() {
         super("Test - Añadir cliente");
