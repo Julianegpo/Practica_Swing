@@ -1,7 +1,6 @@
 package main.db;
 import main.entities.Client;
 import main.entities.Factory;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
