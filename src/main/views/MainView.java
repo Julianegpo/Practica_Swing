@@ -229,7 +229,7 @@ public class MainView extends JFrame{
     }
     //construyes la view mediante el constructor de la clase
     public MainView(){
-        super("Test - Ver clientes");
+        super("Swing - Página principal");
         this.setResizable(false);
         this.setSize(700, 500);
         this.setLocationRelativeTo(null);
