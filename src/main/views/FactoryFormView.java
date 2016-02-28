@@ -157,7 +157,7 @@ public class FactoryFormView extends JFrame{
     }
     //constructor de la view
     public FactoryFormView(){
-        super("Test - Añadir fábrica");
+        super("Swing - Añadir fábrica");
         segundaVentana = new JPanel();
         this.setVisible(true);
         this.setResizable(false);
