@@ -159,7 +159,7 @@ public class ClientFormView extends JFrame{
 
     //constructor de la view
     public ClientFormView() {
-        super("Test - Añadir cliente");
+        super("Swing - Añadir cliente");
         addClient = new JPanel();
         this.setVisible(true);
         this.setResizable(false);
