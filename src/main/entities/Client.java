@@ -12,7 +12,6 @@ public class Client {
     int postal_code;
     int phone;
     public Client(int id, String name, String surname, String dni, String poblation, int postal_code, int phone) {
-        super();
         this.id = id;
         this.name = name;
         this.surname = surname;
